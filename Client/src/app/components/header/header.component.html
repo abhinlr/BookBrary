@@ -1,0 +1,41 @@
+<section id="header">
+  <div class="header">
+    <div class="overlay" *ngIf="loginPopup || signUpPopup"></div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <div>
+          <img class="navbar-brand" routerLink="/" src="../../../assets/logo.png" alt="">
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 account">
+            <li class="nav-item"  >
+              <a class="nav-link" routerLink='/'>Home</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 account">
+            <li class="nav-item" *ngIf="!userIsAuthenticated">
+              <a class="nav-link" (click)="openLoginPopup()">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="!userIsAuthenticated">
+              <a class="nav-link" (click)="openSignUpPopup()">SignUp</a>
+            </li>
+            <li class="nav-item" *ngIf="userIsAuthenticated">
+              <a class="nav-link" routerLink="/profile"><i class="fa-solid fa-user"></i></a>
+            </li>
+            <li class="nav-item" *ngIf="userIsAuthenticated">
+              <a class="nav-link" routerLink='/cart'>&nbsp;&nbsp;<i class="fa-solid fa-cart-shopping"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="login" *ngIf="loginPopup">
+      <span class="close"><i class="fa-solid fa-circle-xmark" (click)="closePopup()" routerLink="/"></i></span>
+      <app-login></app-login>
+    </div>
+    <div class="signUp" *ngIf="signUpPopup">
+      <span class="close"><i class="fa-solid fa-circle-xmark" (click)="closePopup()" routerLink="/"></i></span>
+      <app-signup></app-signup>
+    </div>
+  </div>
+</section>
