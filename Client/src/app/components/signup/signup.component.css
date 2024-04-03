@@ -1,0 +1,24 @@
+input{
+  width: 300px;
+}
+
+.signUp-form{
+  position: relative;
+  right: 70px;
+}
+
+button{
+  float: right;
+  left: 145px;
+  position: relative;
+  margin: 10px 0;
+}
+
+.heading{
+  margin-bottom: 20px;
+}
+input{
+  background-color: #e5e5e5;
+  color: #e5e5e5;
+}
+

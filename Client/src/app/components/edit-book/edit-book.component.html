@@ -1,1 +1,69 @@
-<p>edit-book works!</p>
+<section id="edit">
+  <div class="edit">
+    <div class="container">
+      <div class="row">
+        <div class="card mt-4 p-5">
+          <form class="card-body form-card px-5" (ngSubmit)="editBook()" [formGroup]="bookFormModel">
+            <div class="row justify-content-between text-left mb-4">
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Title<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="title" placeholder="Enter book title">
+                <div *ngIf="bookFormModel.get('title')?.invalid && bookFormModel.get('title')?.touched" class="text-danger">
+                  Title is required
+                </div>
+              </div>
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Author</label>
+                <input type="text" class="form-control" formControlName="author" placeholder="Enter book author">
+              </div>
+            </div>
+            <div class="row justify-content-between text-left  mb-4">
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Description<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="description" placeholder="Enter book description">
+                <div *ngIf="bookFormModel.get('description')?.invalid && bookFormModel.get('description')?.touched" class="text-danger">
+                  Description is required
+                </div>
+              </div>
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Publication Year<span class="text-danger"> *</span></label>
+                <input type="number" class="form-control" formControlName="publicationYear" placeholder="Enter publication year">
+                <div *ngIf="bookFormModel.get('publicationYear')?.invalid && bookFormModel.get('publicationYear')?.touched" class="text-danger">
+                  Publication year is required and must be between 1900 and {{ currentYear }}
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-between text-left  mb-4">
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">ISBN<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="ISBN" placeholder="Enter book ISBN">
+                <div *ngIf="bookFormModel.get('ISBN')?.invalid && bookFormModel.get('ISBN')?.touched" class="text-danger">
+                  ISBN is required
+                </div>
+              </div>
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Genre<span class="text-danger"> *</span></label>
+                <input type="text" class="form-control" formControlName="genre" placeholder="Enter book genre">
+                <div *ngIf="bookFormModel.get('genre')?.invalid && bookFormModel.get('genre')?.touched" class="text-danger">
+                  Genre is required
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-between text-left  mb-4">
+              <div class="form-group col-sm-6 flex-column d-flex">
+                <label class="form-control-label">Language</label>
+                <input type="text" class="form-control" formControlName="language" placeholder="Enter book language">
+              </div>
+            </div>
+            <div class="row justify-content-end">
+              <div class="form-group col-sm-6">
+                <button type="submit" class="btn btn-primary btn-block">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

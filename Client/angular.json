@@ -69,6 +69,7 @@
               "browserTarget": "BookBrary:build:production"
             },
             "development": {
+              "proxyConfig": "src/proxy.conf.json",
               "browserTarget": "BookBrary:build:development"
             }
           },

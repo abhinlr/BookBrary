@@ -5,7 +5,7 @@ import {CreateBookComponent} from "./components/create-book/create-book.componen
 
 const routes: Routes = [
   { path: '', component:HomeComponent},
-  { path: 'create', component:CreateBookComponent}
+  { path: 'add-book', component:CreateBookComponent}
 ];
 
 @NgModule({

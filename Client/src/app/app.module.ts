@@ -10,10 +10,11 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { CreateBookComponent } from './components/create-book/create-book.component';
 import { EditBookComponent } from './components/edit-book/edit-book.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgxPaginationModule} from "ngx-pagination";
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import {NgxPaginationModule} from "ngx-pagination";
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    NgbModalModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -31,3 +31,7 @@ pagination-controls {
 #home{
   min-height: 500px;
 }
+
+.search{
+  float: left;
+}

@@ -1,0 +1,7 @@
+.card {
+  border-radius: 30px;
+  background-image: url("../../../assets/book-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
