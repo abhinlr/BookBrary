@@ -6,25 +6,29 @@
           <h1>Books</h1>
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-info" [routerLink]="'/add-book'"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add Book</button>
+          <button type="button" class="btn btn-info" [routerLink]="'/add-book'"><i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add
+            Book
+          </button>
         </div>
       </div>
       <hr>
       <div class="row mt-4 justify-content-end">
         <div class="col-md-3">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Search" [(ngModel)]="searchValue">
-            <span class="input-group-text" id="inputGroup-sizing-default" (click)="searchBook(searchValue)"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+                   aria-describedby="inputGroup-sizing-default" placeholder="Search" [(ngModel)]="searchValue">
+            <span class="input-group-text" id="inputGroup-sizing-default" (click)="searchBook(searchValue)"><i
+              class="fa-solid fa-magnifying-glass"></i></span>
           </div>
         </div>
         <div class="col-md-1">
           <button type="button" class="btn btn-primary search" (click)="getAllBooks()">Reset</button>
         </div>
         <div class="col-md-1 text-center ms-4">
-          <i class="fa-solid fa-pen-to-square mt-2" (click)="openPopup()"></i>
+          <i class="fa-solid fa-pen-to-square mt-2 button" (click)="openPopup()"></i>
         </div>
         <div class="col-md-1 text-center">
-          <i class="fa-solid fa-trash mt-2" (click)="deleteBook()"></i>
+          <i class="fa-solid fa-trash mt-2 button" (click)="deleteBook()"></i>
         </div>
       </div>
       <div class="row mt-4">
@@ -43,8 +47,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of items | paginate: { itemsPerPage: pageSize, currentPage: currentPage}">
-              <td class="col-1 overflow-hidden"><input class="form-check-input" type="checkbox" [checked]="isSelected(item)" (change)="toggleSelection($event, item)"></td>
+            <tr *ngFor="let item of items | paginate
+              : {
+                  itemsPerPage: pageSize,
+                  currentPage: currentPage,
+                  totalItems: totalItems,
+                  id:'custom-pagination'
+                };
+          let i = index">
+              <td class="col-1 overflow-hidden"><input class="form-check-input" type="checkbox"
+                                                       [checked]="isSelected(item)"
+                                                       (change)="toggleSelection($event, item)"></td>
               <td class="col-2 overflow-hidden">{{ item.title }}</td>
               <td class="col-1 overflow-hidden">{{ item.author }}</td>
               <td class="col-2 overflow-hidden">{{ item.description }}</td>
@@ -60,7 +73,11 @@
       <hr>
       <div class="row">
         <div class="col-md-12 pe-5">
-          <pagination-controls (pageChange)="pageChanged($event)" id="custom-pagination"></pagination-controls>
+          <pagination-controls
+            (pageChange)="pageChanged($event)"
+            id="custom-pagination"
+          >
+          </pagination-controls>
         </div>
       </div>
     </div>

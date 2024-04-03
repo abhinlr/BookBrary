@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators,  ValidatorFn, AbstractControl} from '@angular/forms';
 import {BookService} from "../../services/book.service";
+import { ToastrService } from 'ngx-toastr';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-book',
@@ -12,6 +14,8 @@ export class CreateBookComponent implements OnInit {
   currentYear:Date = new Date();
 
   constructor(private fb:FormBuilder,
+              private toastr: ToastrService,
+              private router: Router,
               private bookService:BookService) {}
 
   ngOnInit(): void {
@@ -31,10 +35,16 @@ export class CreateBookComponent implements OnInit {
       const formData = this.bookFormModel.value;
       this.bookService.addNewBook(formData)
         .subscribe((response)=>{
-          console.log(response);
+          if(response.success){
+            this.toastr.success('Book added successfully!','Success');
+            this.router.navigate(['/']);
+          }else{
+            this.toastr.error('Unable to add book!','Error');
+          }
         })
 
     } else {
+      this.toastr.error('Fill required fields','Error');
       this.bookFormModel.markAllAsTouched();
     }
   }

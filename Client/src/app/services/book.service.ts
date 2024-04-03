@@ -22,7 +22,6 @@ export class BookService {
   }
 
   deleteABook(id:string){
-    console.log(111);
     return this.http.delete<any>(`${apiConfig.deleteBook}/${id}`);
   }
 

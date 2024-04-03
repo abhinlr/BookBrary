@@ -62,7 +62,7 @@
             </div>
             <div class="row justify-content-end">
               <div class="form-group col-sm-6">
-                <button type="submit" class="btn btn-primary btn-block">Add</button>
+                <button type="submit" class="btn btn-primary btn-block" [disabled]="!bookFormModel.valid">Add</button>
               </div>
             </div>
           </form>

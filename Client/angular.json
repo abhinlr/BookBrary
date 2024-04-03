@@ -29,7 +29,7 @@
               "src/styles.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css"
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
@@ -66,11 +66,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "BookBrary:build:production"
+              "buildTarget": "BookBrary:build:production"
             },
             "development": {
               "proxyConfig": "src/proxy.conf.json",
-              "browserTarget": "BookBrary:build:development"
+              "buildTarget": "BookBrary:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "BookBrary:build"
+            "buildTarget": "BookBrary:build"
           }
         },
         "test": {

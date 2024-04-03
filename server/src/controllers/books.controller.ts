@@ -43,8 +43,9 @@ export class BooksController {
       },
     })
     book: Omit<Book, 'id'>,
-  ): Promise<Book> {
-    return this.bookRepository.create(book);
+  ): Promise<{success:boolean}> {
+    await this.bookRepository.create(book);
+    return {success:true};
   }
 
   @get('/books/count')
@@ -72,8 +73,9 @@ export class BooksController {
   })
   async find(
     @param.filter(Book) filter?: Filter<Book>,
-  ): Promise<Book[]> {
-    return this.bookRepository.find(filter);
+  ): Promise<{success:boolean,data:Book[]}> {
+    const data = await this.bookRepository.find(filter);
+    return { success: true, data: data };
   }
 
   @patch('/books')
@@ -109,8 +111,7 @@ export class BooksController {
   })
   async search(
       @requestBody() value: {value:string}
-  ): Promise<Book[]> {
-    console.log(value.value);
+  ): Promise<{ success: boolean, data: any }> {
     const filter: Filter<Book> = {
       where: {
         title: {
@@ -118,7 +119,8 @@ export class BooksController {
         }
       }
     };
-    return this.bookRepository.find(filter);
+    const data = await this.bookRepository.find(filter);
+    return { success: true, data: data };
   }
 
 
@@ -163,15 +165,20 @@ export class BooksController {
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() book: Book,
-  ): Promise<void> {
+  ): Promise<{success:boolean}> {
     await this.bookRepository.replaceById(id, book);
+    return {success:true};
   }
 
-  @del('/books/delete/{id}')
+  @del('/books/delete/{ids}')
   @response(204, {
-    description: 'Book DELETE success',
+    description: 'Books DELETE success',
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.bookRepository.deleteById(id);
+  async deleteById(@param.path.string('ids') ids: string): Promise<{success:boolean}> {
+    const idArray = ids.split(','); // Split the comma-separated string into an array of IDs
+    for (const id of idArray) {
+      await this.bookRepository.deleteById(id);
+    }
+    return {success:true};
   }
 }

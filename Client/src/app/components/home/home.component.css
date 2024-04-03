@@ -28,10 +28,26 @@ pagination-controls {
   color: #fff;
 }
 
-#home{
+#home {
   min-height: 500px;
 }
 
-.search{
+.search {
   float: left;
+}
+
+i.button {
+  font-size: 22px;
+}
+
+th{
+  font-size: 15px;
+}
+
+th{
+  font-size: 14px;
+}
+
+.form-check-input{
+  transform: scale(1.3);
 }

@@ -1,9 +1,14 @@
 import {ApplicationConfig, ServerApplication} from './application';
-import express from 'express';
-import * as http from "http";
 export * from './application';
-import cors from 'cors';
+var express = require('express');
+var errorHandler = require('strong-error-handler');
 
+var app = express();
+
+app.use(errorHandler({
+  debug: app.get('env') === 'development',
+  log: true,
+}));
 export async function main(options: ApplicationConfig = {}) {
   const app = new ServerApplication(options);
   await app.boot();
@@ -14,18 +19,6 @@ export async function main(options: ApplicationConfig = {}) {
   console.log(`Try ${url}/ping`);
 
   return app;
-}
-
-export class ExpressServer {
-  public readonly app: express.Application;
-  public readonly lbApp: ServerApplication;
-  private server?: http.Server;
-
-  constructor(options: ApplicationConfig = {}) {
-    this.app = express();
-    this.app.use(cors());
-    this.lbApp = new ServerApplication(options);
-  }
 }
 
 if (require.main === module) {

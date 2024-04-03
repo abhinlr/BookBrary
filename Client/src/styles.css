@@ -6,3 +6,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button{
   float: right;
 }
+.toast-top-center {
+  margin-top: 20px;
+}

@@ -45,9 +45,9 @@ export class UserController {
       },
     })
     user: Omit<User, 'id'>,
-  ): Promise<User> {
+  ): Promise<{success:boolean}> {
     user.password = await bcrypt.hash(user.password, 10);
-    return this.userRepository.create(user);
+    return {success:true};
   }
 
   @post('/users/login')
@@ -85,7 +85,6 @@ export class UserController {
     catch (err){
       return {error:err};
     }
-
   }
   @get('/users/count')
   @response(200, {

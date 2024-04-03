@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from "../../services/book.service";
-import {resolve} from "@angular/compiler-cli";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditBookComponent} from "../edit-book/edit-book.component";
+import { ToastrService } from 'ngx-toastr';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -16,33 +17,50 @@ export class HomeComponent implements OnInit{
   searchValue:string = '';
   totalItems:number = 0;
   selectedRows: any[] = [];
+  userObject!: any;
+  userIsAuthenticated: boolean = false;
 
   constructor(private bookService:BookService,
-              private modalService:NgbModal) {
+              private modalService:NgbModal,
+              private toastr: ToastrService,
+              private authService:AuthService) {
+    this.authService.getUserObject().subscribe(value => this.userObject = value);
   }
 
   ngOnInit() {
+    if(this.userObject){
+      this.userIsAuthenticated = true;
+    }
     this.getAllBooks();
   }
 
   pageChanged(event: any): void {
-    this.currentPage = event.page;
+    this.currentPage = event;
   }
 
   getAllBooks(){
+    this.searchValue = '';
     this.bookService.getAllBooks()
       .subscribe((response)=>{
-        this.items = response;
-        this.totalItems = this.items.length;
-        this.pageChanged(1);
+        if(response.success){
+          this.items = response.data;
+          this.totalItems = this.items.length;
+          this.pageChanged(1);
+        }else{
+          this.toastr.error('Error fetching books','Error');
+        }
       })
   }
 
   searchBook(title:string){
     this.bookService.searchBook(title)
       .subscribe((response)=>{
-        this.items = response;
-        this.totalItems = this.items.length;
+        if(response.success){
+          this.items = response.data;
+          this.totalItems = this.items.length;
+        }else{
+          this.toastr.error('Error fetching books','Error');
+        }
       })
   }
 
@@ -58,16 +76,38 @@ export class HomeComponent implements OnInit{
     return this.selectedRows.includes(item);
   }
 
-  deleteBook(){
-    console.log('Selected rows:', this.selectedRows);
-    this.bookService.deleteABook(this.selectedRows[0].id)
-      .subscribe(response=>{
-        console.log(response);
-      })
+  deleteBook() {
+    if(!this.userIsAuthenticated){
+      this.toastr.warning('Please login to delete book(s)','Warn');
+      return;
+    }
+    if(this.selectedRows.length<1){
+      this.toastr.warning('Select at least one book','Message');
+      return;
+    }
+    const ids = this.selectedRows.map(row => row.id).join(',');
+    console.log(111,ids);
+    this.bookService.deleteABook(ids)
+      .subscribe(response => {
+        this.toastr.success('Book(s) deleted successfully', 'Success');
+        this.selectedRows = [];
+        this.getAllBooks();
+      });
   }
 
   openPopup() {
-    const modalRef = this.modalService.open(EditBookComponent);
-    modalRef.componentInstance.data = { data:this.selectedRows };
+    if(!this.userIsAuthenticated){
+      this.toastr.warning('Please login to edit book','Warn');
+      return;
+    }
+    if(this.selectedRows.length<1){
+      this.toastr.warning('Select a book to edit.','Message');
+      return;
+    }
+    const modalRef = this.modalService.open(EditBookComponent,{
+      size: 'xl',
+      centered: true
+    });
+    modalRef.componentInstance.data = this.selectedRows[0];
   }
 }

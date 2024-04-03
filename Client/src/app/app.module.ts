@@ -13,8 +13,9 @@ import { EditBookComponent } from './components/edit-book/edit-book.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {NgxPaginationModule} from "ngx-pagination";
 import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgxPaginationModule} from "ngx-pagination";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -33,9 +34,14 @@ import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxPaginationModule,
     ReactiveFormsModule,
-    NgbModalModule
+    NgbModalModule,
+    NgxPaginationModule,
+    ToastrModule.forRoot({
+      timeOut:2000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

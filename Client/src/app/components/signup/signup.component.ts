@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import { ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +11,8 @@ import {Router} from "@angular/router";
 export class SignupComponent {
 
   constructor(private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private toastr:ToastrService) {
   }
 
   signUpData: { name: String, email: String, password: String} = {
@@ -22,8 +24,12 @@ export class SignupComponent {
   signup() {
     this.authService.signUp(this.signUpData)
       .subscribe(response => {
-        if (response.success && response.data) {
-          this.router.navigate(['/']);
+        if (response.success) {
+          this.toastr.success('Signed up successfully','Success');
+          location.reload();
+        }else{
+          this.toastr.error('Unable to sign up.','Error');
+          location.reload();
         }
       });
   };
