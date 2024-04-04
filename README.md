@@ -72,5 +72,3 @@ For support, please contact Abhijith P A.
 
 Authors
 Abhijith P A
-
-Built with ❤️ by Abhijith
