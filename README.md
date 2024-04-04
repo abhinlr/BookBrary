@@ -11,6 +11,15 @@ BookBrary is a web application for managing book details. It provides functional
 **Server:** Node, Express, Loopback4, Mocha, MongoDB
 
 
+## Documentation
+
+[Documentation](https://documenter.getpostman.com/view/23098033/2sA35LTyW4#bb549473-db00-4b43-b5f9-51e5ccc3c775)
+
+
+## Installation
+
+By default the client will be running on localhost:4200 and the server will be running on localhost:3000
+
 ## Run Locally
 
 Clone the project
