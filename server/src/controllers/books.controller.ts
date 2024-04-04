@@ -44,6 +44,10 @@ export class BooksController {
     })
     book: Omit<Book, 'id'>,
   ): Promise<{success:boolean}> {
+    const existingISBN = await this.bookRepository.findOne({where: {ISBN: book.ISBN}});
+    if(existingISBN){
+      return {success:false}
+    }
     await this.bookRepository.create(book);
     return {success:true};
   }

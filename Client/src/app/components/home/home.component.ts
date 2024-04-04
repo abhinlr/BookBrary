@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit{
           this.totalItems = this.items.length;
           this.pageChanged(1);
         }else{
-          this.toastr.error('Error fetching books','Error');
+          this.toastr.error('Error fetching books!','Error');
         }
       })
   }
@@ -56,10 +56,14 @@ export class HomeComponent implements OnInit{
     this.bookService.searchBook(title)
       .subscribe((response)=>{
         if(response.success){
-          this.items = response.data;
-          this.totalItems = this.items.length;
+          if(response.data.length>0){
+            this.items = response.data;
+            this.totalItems = this.items.length;
+          }else{
+            this.toastr.warning('No books found!','Message');
+          }
         }else{
-          this.toastr.error('Error fetching books','Error');
+          this.toastr.error('Error fetching books!','Error');
         }
       })
   }
@@ -86,7 +90,6 @@ export class HomeComponent implements OnInit{
       return;
     }
     const ids = this.selectedRows.map(row => row.id).join(',');
-    console.log(111,ids);
     this.bookService.deleteABook(ids)
       .subscribe(response => {
         this.toastr.success('Book(s) deleted successfully', 'Success');
@@ -97,11 +100,11 @@ export class HomeComponent implements OnInit{
 
   openPopup() {
     if(!this.userIsAuthenticated){
-      this.toastr.warning('Please login to edit book','Warn');
+      this.toastr.warning('Please login to edit book!','Warn');
       return;
     }
     if(this.selectedRows.length<1){
-      this.toastr.warning('Select a book to edit.','Message');
+      this.toastr.warning('Select a book to edit!','Message');
       return;
     }
     const modalRef = this.modalService.open(EditBookComponent,{

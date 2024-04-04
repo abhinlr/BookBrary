@@ -15,7 +15,7 @@ import {
   put,
   del,
   requestBody,
-  response,
+  response, HttpErrors,
 } from '@loopback/rest';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
@@ -29,25 +29,28 @@ export class UserController {
   ) {}
 
   @post('/users/signUp')
-  @response(200, {
-    description: 'User model instance',
-    content: {'application/json': {schema: getModelSchemaRef(User)}},
-  })
   async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(User, {
-            title: 'NewUser',
-            exclude: ['id'],
-          }),
+      @requestBody({
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(User, {
+              title: 'NewUser',
+              exclude: ['id'],
+            }),
+          },
         },
-      },
-    })
-    user: Omit<User, 'id'>,
-  ): Promise<{success:boolean}> {
+      })
+          user: Omit<User, 'id'>,
+  ): Promise<{ success: boolean }> {
+    const existingUser = await this.userRepository.findOne({
+      where: { email: user.email },
+    });
+    if (existingUser) {
+      return {success:false};
+    }
     user.password = await bcrypt.hash(user.password, 10);
-    return {success:true};
+    await this.userRepository.create(user);
+    return { success: true };
   }
 
   @post('/users/login')
@@ -80,10 +83,11 @@ export class UserController {
       const token = jwt.sign({ userId: user.email }, 'your-secret-key', {
         expiresIn: '24h',
       });
-      return {token:token, user:user};
+      const { password, ...userWithoutPassword } = user;
+      return { success: true, token, user: userWithoutPassword };
     }
     catch (err){
-      return {error:err};
+      return {success:false, token:null, error:'Invalid credentials!'};
     }
   }
   @get('/users/count')

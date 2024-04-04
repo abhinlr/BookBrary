@@ -39,10 +39,9 @@ export class CreateBookComponent implements OnInit {
             this.toastr.success('Book added successfully!','Success');
             this.router.navigate(['/']);
           }else{
-            this.toastr.error('Unable to add book!','Error');
+            this.toastr.error('ISBN already exists!','Error');
           }
         })
-
     } else {
       this.toastr.error('Fill required fields','Error');
       this.bookFormModel.markAllAsTouched();

@@ -28,8 +28,7 @@ export class SignupComponent {
           this.toastr.success('Signed up successfully','Success');
           location.reload();
         }else{
-          this.toastr.error('Unable to sign up.','Error');
-          location.reload();
+          this.toastr.error('Email already exists','Error');
         }
       });
   };

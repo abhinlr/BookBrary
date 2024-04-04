@@ -49,21 +49,16 @@ export class AuthService{
 
   login(loginData: any) {
     this.http.post<any>(apiConfig.login, { email: loginData.email, password: loginData.password })
-      .pipe(
-        map(response => {
-          delete response.user.password;
-          return response;
-        })
-      )
       .subscribe(response => {
-        if (response.token) {
+        if (response.success) {
           localStorage.setItem('user', JSON.stringify(response.user));
           localStorage.setItem('token', response.token);
           this.isAuthenticated = true;
           this.setUserObject(response.user);
           location.reload();
         }else{
-          this.toastr.error('Unable to login','Error');
+          console.log(response);
+          this.toastr.error(response.error,'Error');
         }
       });
   }
