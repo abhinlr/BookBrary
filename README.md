@@ -20,6 +20,12 @@ BookBrary is a web application for managing book details. It provides functional
 
 By default the client will be running on localhost:4200 and the server will be running on localhost:3000
 
+Preferred versions:
+
+Angular CLI: 17.3.2
+
+NodeJs: v20.11.1
+
 ## Run Locally
 
 Clone the project
