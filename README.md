@@ -1,4 +1,4 @@
-BookBrary - Book CRUD Web Application
+#BookBrary - Book CRUD Web Application#
 BookBrary is a web application for managing book details. It provides functionalities for creating, reading, updating, and deleting book records. The front end is built using Angular with Bootstrap and reactive forms for creating book details. The back end is powered by LoopBack 4, Node.js, and Express, with MongoDB as the database. Unit testing for the backend is performed using Mocha.
 
 Prerequisites
