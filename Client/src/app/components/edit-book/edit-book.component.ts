@@ -33,7 +33,6 @@ export class EditBookComponent implements OnInit{
       genre: [this.data.genre || '', Validators.required],
       language: [this.data.language || '']
     });
-    console.log(this.data);
   }
 
   isbnValidator(): ValidatorFn {

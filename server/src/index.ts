@@ -1,12 +1,13 @@
 import {ApplicationConfig, ServerApplication} from './application';
 export * from './application';
-var express = require('express');
-var errorHandler = require('strong-error-handler');
+import express from 'express';
 
-var app = express();
+import errorHandler from 'strong-error-handler';
 
-app.use(errorHandler({
-  debug: app.get('env') === 'development',
+const expressapp = express();
+
+expressapp.use(errorHandler({
+  debug: expressapp.get('env') === 'development',
   log: true,
 }));
 export async function main(options: ApplicationConfig = {}) {

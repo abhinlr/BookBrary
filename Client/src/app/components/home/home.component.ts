@@ -89,8 +89,8 @@ export class HomeComponent implements OnInit{
       this.toastr.warning('Select at least one book','Message');
       return;
     }
-    const ids = this.selectedRows.map(row => row.id).join(',');
-    this.bookService.deleteABook(ids)
+    const ISBNs = this.selectedRows.map(row => row.ISBN).join(',');
+    this.bookService.deleteBook(ISBNs)
       .subscribe(response => {
         this.toastr.success('Book(s) deleted successfully', 'Success');
         this.selectedRows = [];
@@ -112,5 +112,11 @@ export class HomeComponent implements OnInit{
       centered: true
     });
     modalRef.componentInstance.data = this.selectedRows[0];
+    modalRef.result.then(
+      () => {
+        this.selectedRows = [];
+        this.getAllBooks();
+      }
+    );
   }
 }

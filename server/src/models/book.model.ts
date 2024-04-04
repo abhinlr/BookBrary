@@ -29,6 +29,7 @@ export class Book extends Entity {
   @property({
     type: 'string',
     required: true,
+    pattern:'^[0-9]{13}$'
   })
   ISBN: number;
 
@@ -57,7 +58,6 @@ export class Book extends Entity {
 }
 
 export interface BookRelations {
-  // describe navigational properties here
 }
 
 export type BookWithRelations = Book & BookRelations;

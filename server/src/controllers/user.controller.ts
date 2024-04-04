@@ -15,7 +15,7 @@ import {
   put,
   del,
   requestBody,
-  response, HttpErrors,
+  response
 } from '@loopback/rest';
 import {User} from '../models';
 import {UserRepository} from '../repositories';
@@ -39,8 +39,7 @@ export class UserController {
             }),
           },
         },
-      })
-          user: Omit<User, 'id'>,
+      }) user: { password: string; email: string },
   ): Promise<{ success: boolean }> {
     const existingUser = await this.userRepository.findOne({
       where: { email: user.email },
@@ -68,9 +67,8 @@ export class UserController {
             }),
           },
         },
-      })
-          userData: Omit<User, 'id'>,
-  ): Promise<any> {
+      }) userData: { password: string; email: string },
+  ): Promise<{success:boolean, token:any, user:any}> {
     try{
       const user = await this.userRepository.findOne({where: {email: userData.email}});
       if (!user) {
@@ -84,10 +82,10 @@ export class UserController {
         expiresIn: '24h',
       });
       const { password, ...userWithoutPassword } = user;
-      return { success: true, token, user: userWithoutPassword };
+      return { success: true, token:token, user: userWithoutPassword };
     }
     catch (err){
-      return {success:false, token:null, error:'Invalid credentials!'};
+      return {success:false, token:null, user:null};
     }
   }
   @get('/users/count')

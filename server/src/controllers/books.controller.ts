@@ -15,7 +15,7 @@ import {
   put,
   del,
   requestBody,
-  response,
+  response, HttpErrors,
 } from '@loopback/rest';
 import {Book} from '../models';
 import {BookRepository} from '../repositories';
@@ -115,7 +115,7 @@ export class BooksController {
   })
   async search(
       @requestBody() value: {value:string}
-  ): Promise<{ success: boolean, data: any }> {
+  ): Promise<{ success: boolean, data: {} }> {
     const filter: Filter<Book> = {
       where: {
         title: {
@@ -174,15 +174,30 @@ export class BooksController {
     return {success:true};
   }
 
-  @del('/books/delete/{ids}')
-  @response(204, {
-    description: 'Books DELETE success',
-  })
-  async deleteById(@param.path.string('ids') ids: string): Promise<{success:boolean}> {
-    const idArray = ids.split(','); // Split the comma-separated string into an array of IDs
-    for (const id of idArray) {
-      await this.bookRepository.deleteById(id);
+  @del('/books/delete/{ISBNs}')
+  async deleteByISBN(@param.path.string('ISBNs') isbns: string): Promise<{ success: boolean }> {
+    const ISBNArray = isbns.split(','); // Split the comma-separated string into an array of ISBNs
+    try {
+      for (const ISBN of ISBNArray) {
+        const ISBNNumber = Number(ISBN.trim());
+        if (isNaN(ISBNNumber)) {
+          throw new HttpErrors.BadRequest(`Invalid ISBN: ${ISBN}`);
+        }
+        const existingBook = await this.bookRepository.findOne({ where: { ISBN: ISBNNumber } });
+        if (!existingBook) {
+          throw new HttpErrors.NotFound(`Book with ISBN ${ISBN} not found`);
+        }
+        await this.bookRepository.delete(existingBook);
+      }
+      return { success: true };
+    } catch (error) {
+      if (error instanceof HttpErrors.BadRequest || error instanceof HttpErrors.NotFound) {
+        return { success: false };
+      } else {
+        throw new HttpErrors.InternalServerError('An unexpected error occurred');
+      }
     }
-    return {success:true};
   }
+
+
 }

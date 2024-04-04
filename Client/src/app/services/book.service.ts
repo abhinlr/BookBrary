@@ -21,8 +21,8 @@ export class BookService {
     return this.http.put<any>(`${apiConfig.editBook}/${id}`, bookData)
   }
 
-  deleteABook(id:string){
-    return this.http.delete<any>(`${apiConfig.deleteBook}/${id}`);
+  deleteBook(ISBN:string){
+    return this.http.delete<any>(`${apiConfig.deleteBook}/${ISBN}`);
   }
 
   searchBook(value:string){
