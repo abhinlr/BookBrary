@@ -58,7 +58,7 @@ export class AuthService{
           location.reload();
         }else{
           console.log(response);
-          this.toastr.error(response.error,'Error');
+          this.toastr.error('Invalid credentials','Error');
         }
       });
   }
