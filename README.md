@@ -96,3 +96,6 @@ or
   npm test
 ```
 
+## Authors
+
+- [@abhinlr](https://www.github.com/abhinlr)
